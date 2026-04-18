@@ -27,43 +27,42 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-icen-navy flex items-center justify-center p-6 relative" data-testid="admin-login-page">
-      <div className="absolute inset-0 icen-spotlight" />
-      <div className="absolute inset-0 icen-grid opacity-[0.2]" />
+    <div className="min-h-screen bg-icen-ivory flex items-center justify-center p-6 relative" data-testid="admin-login-page">
+      <div className="absolute inset-0 icen-grid-light opacity-60" />
       <div className="relative w-full max-w-md">
-        <div className="flex justify-center mb-10"><ICENWordmark /></div>
-        <div className="icen-glass p-10 border border-white/10">
-          <div className="icen-overline mb-3 flex items-center gap-2"><Lock size={13}/> Secretariat Access</div>
-          <h1 className="font-serif text-4xl text-white">Admin Login</h1>
-          <p className="text-sm text-slate-400 mt-2">Restricted to authorized personnel.</p>
+        <div className="flex justify-center mb-10"><ICENWordmark variant="dark" /></div>
+        <div className="bg-icen-paper border border-icen-line p-10 shadow-card">
+          <div className="icen-overline mb-3 flex items-center gap-2"><Lock size={13} /> Secretariat Access</div>
+          <h1 className="font-serif text-4xl text-icen-ink">Admin Login</h1>
+          <p className="text-sm text-icen-inkSoft mt-2">Restricted to authorized personnel.</p>
 
           <form onSubmit={onSubmit} className="mt-8 space-y-5">
             <div>
-              <label className="block text-[11px] uppercase tracking-[0.24em] text-slate-400 font-semibold mb-2">Email</label>
+              <label className="block text-[11px] uppercase tracking-[0.24em] text-icen-muted font-semibold mb-2">Email</label>
               <input
                 data-testid="admin-login-email"
                 type="email" required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-transparent border border-white/15 px-4 py-3 text-white placeholder:text-slate-600 focus:border-icen-blue focus:outline-none transition-colors"
+                className="w-full bg-icen-paper border border-icen-line px-4 py-3 text-icen-ink placeholder:text-icen-muted focus:border-icen-ink focus:outline-none transition-colors"
                 placeholder="admin@icen.org"
               />
             </div>
             <div>
-              <label className="block text-[11px] uppercase tracking-[0.24em] text-slate-400 font-semibold mb-2">Password</label>
+              <label className="block text-[11px] uppercase tracking-[0.24em] text-icen-muted font-semibold mb-2">Password</label>
               <input
                 data-testid="admin-login-password"
                 type="password" required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-transparent border border-white/15 px-4 py-3 text-white placeholder:text-slate-600 focus:border-icen-blue focus:outline-none transition-colors"
+                className="w-full bg-icen-paper border border-icen-line px-4 py-3 text-icen-ink placeholder:text-icen-muted focus:border-icen-ink focus:outline-none transition-colors"
                 placeholder="••••••••"
               />
             </div>
 
             {err && (
-              <div className="flex items-center gap-2 text-sm text-red-300 border border-red-500/30 bg-red-500/5 p-3">
-                <AlertCircle size={15}/> {err}
+              <div className="flex items-center gap-2 text-sm text-red-700 border border-red-300 bg-red-50 p-3">
+                <AlertCircle size={15} /> {err}
               </div>
             )}
 
@@ -72,10 +71,10 @@ export default function AdminLogin() {
               disabled={busy}
               data-testid="admin-login-submit"
               className="icen-btn-primary w-full justify-center disabled:opacity-60"
-            >{busy ? "Signing in…" : "Sign In"} <ArrowRight size={14}/></button>
+            >{busy ? "Signing in…" : "Sign In"} <ArrowRight size={14} /></button>
           </form>
         </div>
-        <p className="text-center text-xs text-slate-500 mt-6">ICEN · Secretariat Portal</p>
+        <p className="text-center text-xs text-icen-muted mt-6">ICEN · Secretariat Portal</p>
       </div>
     </div>
   );

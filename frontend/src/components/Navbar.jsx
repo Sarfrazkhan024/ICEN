@@ -31,12 +31,12 @@ export default function Navbar() {
     <header
       data-testid="main-navbar"
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-icen-navy/85 backdrop-blur-xl border-b border-white/10" : "bg-transparent border-b border-transparent"
+        scrolled ? "bg-icen-ivory/90 backdrop-blur-xl border-b border-icen-line" : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 h-[76px] flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 h-[80px] flex items-center justify-between">
         <Link to="/" data-testid="nav-logo" className="shrink-0">
-          <ICENWordmark />
+          <ICENWordmark variant="dark" compact />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1">
@@ -48,7 +48,7 @@ export default function Navbar() {
               data-testid={`nav-${n.label.toLowerCase()}`}
               className={({ isActive }) =>
                 `px-4 py-2 text-[13px] tracking-wide font-medium transition-colors ${
-                  isActive ? "text-white" : "text-slate-400 hover:text-white"
+                  isActive ? "text-icen-ink" : "text-icen-muted hover:text-icen-ink"
                 }`
               }
             >
@@ -58,14 +58,14 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <Link to="/admin/login" data-testid="nav-admin" className="text-[12px] uppercase tracking-[0.2em] text-slate-500 hover:text-slate-300 transition-colors">Admin</Link>
-          <Link to="/apply" data-testid="nav-apply-cta" className="icen-btn-primary text-[12px] uppercase tracking-[0.18em] py-3 px-6">
+          <Link to="/admin/login" data-testid="nav-admin" className="text-[11px] uppercase tracking-[0.22em] text-icen-muted hover:text-icen-ink transition-colors">Admin</Link>
+          <Link to="/apply" data-testid="nav-apply-cta" className="icen-btn-primary text-[11px] py-3 px-5">
             Apply
           </Link>
         </div>
 
         <button
-          className="lg:hidden text-white p-2"
+          className="lg:hidden text-icen-ink p-2"
           onClick={() => setOpen(!open)}
           data-testid="nav-mobile-toggle"
           aria-label="Toggle menu"
@@ -75,7 +75,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="lg:hidden bg-icen-navy/98 backdrop-blur-xl border-t border-white/10" data-testid="nav-mobile-panel">
+        <div className="lg:hidden bg-icen-paper/98 backdrop-blur-xl border-t border-icen-line" data-testid="nav-mobile-panel">
           <div className="px-6 py-6 flex flex-col gap-1">
             {NAV.map((n) => (
               <NavLink
@@ -83,14 +83,14 @@ export default function Navbar() {
                 to={n.to}
                 end={n.to === "/"}
                 className={({ isActive }) =>
-                  `py-3 text-base tracking-wide font-medium ${isActive ? "text-white" : "text-slate-400"}`
+                  `py-3 text-base tracking-wide font-medium ${isActive ? "text-icen-ink" : "text-icen-muted"}`
                 }
               >
                 {n.label}
               </NavLink>
             ))}
             <Link to="/apply" className="icen-btn-primary mt-4 justify-center">Apply for Membership</Link>
-            <Link to="/admin/login" className="text-center mt-2 text-[12px] uppercase tracking-[0.2em] text-slate-500">Admin Login</Link>
+            <Link to="/admin/login" className="text-center mt-2 text-[11px] uppercase tracking-[0.22em] text-icen-muted">Admin Login</Link>
           </div>
         </div>
       )}

@@ -9,15 +9,15 @@ const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 const STEPS = ["Identity", "Profile", "Motivation", "Review"];
 
 function Label({ children }) {
-  return <label className="block text-[11px] uppercase tracking-[0.24em] text-slate-400 font-semibold mb-2">{children}</label>;
+  return <label className="block text-[11px] uppercase tracking-[0.24em] text-icen-muted font-semibold mb-2">{children}</label>;
 }
 
-const inputCls = "w-full bg-transparent border border-white/15 px-4 py-3 text-white placeholder:text-slate-600 focus:border-icen-blue focus:outline-none transition-colors font-sans text-[15px]";
+const inputCls = "w-full bg-icen-paper border border-icen-line px-4 py-3 text-icen-ink placeholder:text-icen-muted focus:border-icen-ink focus:outline-none transition-colors font-sans text-[15px]";
 
 export default function Apply() {
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(null); // {id}
+  const [success, setSuccess] = useState(null);
   const [error, setError] = useState("");
   const [form, setForm] = useState({
     full_name: "",
@@ -60,44 +60,43 @@ export default function Apply() {
   };
 
   return (
-    <div className="pt-[120px] pb-24 bg-icen-navy min-h-screen relative" data-testid="apply-page">
-      <div className="absolute inset-0 icen-grid opacity-[0.18]" />
+    <div className="pt-[120px] pb-24 bg-icen-ivory min-h-screen relative" data-testid="apply-page">
+      <div className="absolute inset-0 icen-grid-light opacity-60" />
       <div className="relative max-w-[900px] mx-auto px-6 lg:px-10">
         <div className="icen-overline mb-6">Apply</div>
-        <h1 className="font-serif text-5xl md:text-6xl text-white leading-[1.02] tracking-tight max-w-3xl">
-          Submit your <em className="italic text-icen-green">candidacy.</em>
+        <h1 className="font-serif text-5xl md:text-6xl text-icen-ink leading-[1.02] tracking-tight max-w-3xl">
+          Submit your <em className="italic text-icen-blue">candidacy.</em>
         </h1>
-        <p className="mt-6 text-lg text-slate-400 max-w-xl">
+        <p className="mt-6 text-lg text-icen-inkSoft max-w-xl">
           Review takes 7–10 business days. Every application is read by a member of the Secretariat.
         </p>
 
         {success ? (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-14 p-10 border border-icen-green/40 bg-icen-green/5" data-testid="apply-success">
-            <div className="icen-overline text-icen-green">Received</div>
-            <h2 className="font-serif text-4xl text-white mt-3">Your application is with the Secretariat.</h2>
-            <p className="mt-4 text-slate-300">A confirmation has been sent to <span className="text-white">{form.email}</span>.</p>
-            <p className="text-xs text-slate-500 mt-3 font-mono">Reference: {success.id}</p>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-14 p-10 border border-icen-green/40 bg-white" data-testid="apply-success">
+            <div className="icen-overline" style={{ color: "#008F4C" }}>Received</div>
+            <h2 className="font-serif text-4xl text-icen-ink mt-3">Your application is with the Secretariat.</h2>
+            <p className="mt-4 text-icen-inkSoft">A confirmation has been sent to <span className="text-icen-ink">{form.email}</span>.</p>
+            <p className="text-xs text-icen-muted mt-3 font-mono">Reference: {success.id}</p>
           </motion.div>
         ) : (
           <div className="mt-14">
-            {/* Stepper */}
             <div className="flex items-center gap-3 mb-10" data-testid="apply-stepper">
               {STEPS.map((s, i) => (
                 <React.Fragment key={s}>
-                  <div className={`flex items-center gap-2 ${i === step ? "text-white" : i < step ? "text-icen-green" : "text-slate-500"}`}>
+                  <div className={`flex items-center gap-2 ${i === step ? "text-icen-ink" : i < step ? "text-icen-green" : "text-icen-muted"}`}>
                     <div className={`w-7 h-7 border flex items-center justify-center text-xs ${
-                      i === step ? "border-icen-blue bg-icen-blue text-white" :
+                      i === step ? "border-icen-ink bg-icen-ink text-white" :
                       i < step ? "border-icen-green text-icen-green" :
-                      "border-white/20"
-                    }`}>{i < step ? <Check size={13}/> : i + 1}</div>
+                      "border-icen-line"
+                    }`}>{i < step ? <Check size={13} /> : i + 1}</div>
                     <span className="text-[11px] uppercase tracking-[0.24em] hidden md:block">{s}</span>
                   </div>
-                  {i < STEPS.length - 1 && <div className="flex-1 h-px bg-white/10" />}
+                  {i < STEPS.length - 1 && <div className="flex-1 h-px bg-icen-line" />}
                 </React.Fragment>
               ))}
             </div>
 
-            <div className="bg-icen-surface/60 backdrop-blur-xl border border-white/10 p-8 md:p-10">
+            <div className="bg-icen-paper border border-icen-line p-8 md:p-10">
               <AnimatePresence mode="wait">
                 <motion.div key={step} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} transition={{ duration: 0.3 }}>
                   {step === 0 && (
@@ -142,10 +141,10 @@ export default function Apply() {
                               type="button"
                               data-testid={`apply-tier-${t.id}`}
                               onClick={() => setForm({ ...form, membership_tier: t.id })}
-                              className={`text-left p-4 border transition-all ${form.membership_tier === t.id ? "border-icen-blue bg-icen-blue/10" : "border-white/10 hover:border-white/30"}`}
+                              className={`text-left p-4 border transition-all ${form.membership_tier === t.id ? "border-icen-ink bg-icen-ink/5" : "border-icen-line hover:border-icen-ink/50"}`}
                             >
-                              <div className="font-serif text-xl text-white">{t.name}</div>
-                              <div className="text-xs text-slate-400 mt-1">{t.price}</div>
+                              <div className="font-serif text-xl text-icen-ink">{t.name}</div>
+                              <div className="text-xs text-icen-muted mt-1">{t.price}</div>
                             </button>
                           ))}
                         </div>
@@ -161,7 +160,7 @@ export default function Apply() {
                                 type="button"
                                 data-testid={`apply-pillar-${p.id}`}
                                 onClick={() => togglePillar(p.title)}
-                                className={`text-[12px] px-3 py-2 border transition-all ${on ? "border-icen-green bg-icen-green/10 text-white" : "border-white/10 text-slate-300 hover:border-white/30"}`}
+                                className={`text-[12px] px-3 py-2 border transition-all ${on ? "border-icen-blue bg-icen-blue/10 text-icen-ink" : "border-icen-line text-icen-inkSoft hover:border-icen-ink/50"}`}
                               >{p.title}</button>
                             );
                           })}
@@ -180,25 +179,25 @@ export default function Apply() {
                         onChange={update("motivation")}
                         placeholder="Share your motivation, your vision for emerging nations, and how you would contribute."
                       />
-                      <div className="text-xs text-slate-500 mt-2">{form.motivation.length} / 2000</div>
+                      <div className="text-xs text-icen-muted mt-2">{form.motivation.length} / 2000</div>
                     </div>
                   )}
 
                   {step === 3 && (
                     <div className="space-y-5 text-sm">
                       <div className="icen-overline">Review</div>
-                      <dl className="grid grid-cols-3 gap-y-3 gap-x-6 text-slate-300">
-                        <dt className="col-span-1 text-slate-500">Name</dt><dd className="col-span-2">{form.full_name}</dd>
-                        <dt className="col-span-1 text-slate-500">Email</dt><dd className="col-span-2">{form.email}</dd>
-                        <dt className="col-span-1 text-slate-500">Country</dt><dd className="col-span-2">{form.country}</dd>
-                        <dt className="col-span-1 text-slate-500">Organization</dt><dd className="col-span-2">{form.organization || "—"}</dd>
-                        <dt className="col-span-1 text-slate-500">Role</dt><dd className="col-span-2">{form.role_title || "—"}</dd>
-                        <dt className="col-span-1 text-slate-500">Tier</dt><dd className="col-span-2 capitalize">{form.membership_tier}</dd>
-                        <dt className="col-span-1 text-slate-500">Pillars</dt><dd className="col-span-2">{form.focus_pillars.join(", ") || "—"}</dd>
+                      <dl className="grid grid-cols-3 gap-y-3 gap-x-6 text-icen-inkSoft">
+                        <dt className="col-span-1 text-icen-muted">Name</dt><dd className="col-span-2 text-icen-ink">{form.full_name}</dd>
+                        <dt className="col-span-1 text-icen-muted">Email</dt><dd className="col-span-2 text-icen-ink">{form.email}</dd>
+                        <dt className="col-span-1 text-icen-muted">Country</dt><dd className="col-span-2 text-icen-ink">{form.country}</dd>
+                        <dt className="col-span-1 text-icen-muted">Organization</dt><dd className="col-span-2 text-icen-ink">{form.organization || "—"}</dd>
+                        <dt className="col-span-1 text-icen-muted">Role</dt><dd className="col-span-2 text-icen-ink">{form.role_title || "—"}</dd>
+                        <dt className="col-span-1 text-icen-muted">Tier</dt><dd className="col-span-2 capitalize text-icen-ink">{form.membership_tier}</dd>
+                        <dt className="col-span-1 text-icen-muted">Pillars</dt><dd className="col-span-2 text-icen-ink">{form.focus_pillars.join(", ") || "—"}</dd>
                       </dl>
                       <div>
                         <div className="icen-overline mb-2">Motivation</div>
-                        <p className="text-slate-300 whitespace-pre-wrap">{form.motivation}</p>
+                        <p className="text-icen-inkSoft whitespace-pre-wrap">{form.motivation}</p>
                       </div>
                     </div>
                   )}
@@ -206,8 +205,8 @@ export default function Apply() {
               </AnimatePresence>
 
               {error && (
-                <div className="mt-6 flex items-center gap-2 text-sm text-red-300 border border-red-500/30 bg-red-500/5 p-3">
-                  <AlertCircle size={16}/> {error}
+                <div className="mt-6 flex items-center gap-2 text-sm text-red-700 border border-red-300 bg-red-50 p-3">
+                  <AlertCircle size={16} /> {error}
                 </div>
               )}
 
@@ -216,7 +215,7 @@ export default function Apply() {
                   disabled={step === 0 || submitting}
                   onClick={() => setStep((s) => s - 1)}
                   data-testid="apply-back"
-                  className="text-sm text-slate-400 hover:text-white disabled:opacity-30 transition-colors"
+                  className="text-sm text-icen-muted hover:text-icen-ink disabled:opacity-30 transition-colors"
                 >← Back</button>
 
                 {step < STEPS.length - 1 ? (
@@ -225,14 +224,14 @@ export default function Apply() {
                     onClick={() => setStep((s) => s + 1)}
                     data-testid="apply-next"
                     className="icen-btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
-                  >Continue <ArrowRight size={14}/></button>
+                  >Continue <ArrowRight size={14} /></button>
                 ) : (
                   <button
                     disabled={submitting}
                     onClick={submit}
                     data-testid="apply-submit"
                     className="icen-btn-primary disabled:opacity-60"
-                  >{submitting ? "Submitting…" : "Submit Application"} <ArrowRight size={14}/></button>
+                  >{submitting ? "Submitting…" : "Submit Application"} <ArrowRight size={14} /></button>
                 )}
               </div>
             </div>

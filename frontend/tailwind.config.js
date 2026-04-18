@@ -23,13 +23,24 @@ module.exports = {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         icen: {
-          navy: '#020617',
-          surface: '#0F172A',
-          elevated: '#1E293B',
+          // Light institutional palette
+          paper: '#FFFFFF',
+          ivory: '#F7F5EF',       // warm off-white
+          mist:  '#F1EEE6',       // subtle band
+          line:  '#E6E1D5',       // hairline
+          ink:   '#0A1628',       // deep navy — primary text
+          inkSoft: '#334155',     // secondary text
+          muted: '#6B7280',       // tertiary
+          // Accents
+          navy: '#0A1628',
           blue: '#0057FF',
           blueSoft: '#3B82F6',
-          green: '#00C46A',
-          greenSoft: '#34D399',
+          green: '#008F4C',       // slightly darker green for contrast on white
+          greenSoft: '#00A859',
+          // Dark sections (for cinematic contrast)
+          deep: '#0A1628',
+          deepSurface: '#0F1A2E',
+          deepElevated: '#162238',
         },
       },
       borderRadius: {
@@ -38,23 +49,22 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)',
       },
       boxShadow: {
-        glow: '0 0 30px rgba(0, 87, 255, 0.35)',
-        glowStrong: '0 0 60px rgba(0, 87, 255, 0.55)',
-        glowGreen: '0 0 30px rgba(0, 196, 106, 0.3)',
+        soft: '0 1px 2px rgba(10,22,40,0.04), 0 8px 24px rgba(10,22,40,0.06)',
+        card: '0 1px 0 rgba(10,22,40,0.04), 0 12px 40px rgba(10,22,40,0.08)',
+        glow: '0 0 24px rgba(0, 87, 255, 0.25)',
+        glowStrong: '0 0 48px rgba(0, 87, 255, 0.35)',
       },
       keyframes: {
         'accordion-down': { from: { height: '0' }, to: { height: 'var(--radix-accordion-content-height)' } },
         'accordion-up': { from: { height: 'var(--radix-accordion-content-height)' }, to: { height: '0' } },
         'fade-up': { '0%': { opacity: '0', transform: 'translateY(24px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
         'slow-spin': { from: { transform: 'rotate(0deg)' }, to: { transform: 'rotate(360deg)' } },
-        'shimmer': { '0%': { backgroundPosition: '-200% 0' }, '100%': { backgroundPosition: '200% 0' } },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-up': 'fade-up 0.8s ease-out both',
         'slow-spin': 'slow-spin 120s linear infinite',
-        'shimmer': 'shimmer 6s linear infinite',
       },
     },
   },
