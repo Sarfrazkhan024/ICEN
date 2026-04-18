@@ -58,6 +58,17 @@ body {
 .icen-overline-muted { color: #6B7280 !important; }
 .icen-overline-inv { color: #60A5FA !important; }
 
+/* Marquee keyframes */
+@keyframes marquee-l { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes marquee-r { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.animate-marquee-l { animation: marquee-l linear infinite; width: max-content; }
+.animate-marquee-r { animation: marquee-r linear infinite; width: max-content; }
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+.animate-marquee-l:hover, .animate-marquee-r:hover { animation-play-state: paused; }
+
 /* Hairline divider */
 .icen-rule {
   height: 1px;

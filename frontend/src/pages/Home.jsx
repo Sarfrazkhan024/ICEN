@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Globe2, Sparkles } from "lucide-react";
 import * as Icons from "lucide-react";
-import HeroGlobe from "../components/HeroGlobe";
+import WorldMap from "../components/WorldMap";
+import FlagsMarquee from "../components/FlagsMarquee";
 import AnimatedCounter from "../components/AnimatedCounter";
 import SEO from "../components/SEO";
 import { PILLARS, TIERS, REGIONS, IMPACT_IMAGES } from "../content/icen";
@@ -52,18 +53,20 @@ export default function Home() {
       <SEO title={null} path="/" />
       {/* HERO */}
       <section className="relative min-h-[100vh] overflow-hidden pt-[72px] md:pt-[80px]" data-testid="hero-section">
-        <div className="absolute inset-0 icen-grid-light opacity-70" />
-        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10 pt-10 md:pt-14 grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-10 items-center">
-          <motion.div initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.12 } } }}>
+        <div className="absolute inset-0 icen-grid-light opacity-60" />
+        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10 pt-10 md:pt-14">
+          <motion.div initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="max-w-[1100px]">
             <motion.div variants={fadeUp} className="icen-overline mb-6 flex items-center gap-3">
               <Globe2 size={14} /> A Global Council · Est. MMXXVI
             </motion.div>
-            <motion.h1 variants={fadeUp} className="font-serif text-[40px] sm:text-[52px] md:text-[68px] lg:text-[84px] leading-[1.0] tracking-tight text-icen-ink">
+            <motion.div variants={fadeUp} className="text-[11px] sm:text-[13px] tracking-[0.34em] uppercase text-icen-inkSoft font-sans font-semibold mb-5" data-testid="hero-fullname">
+              International Council for Emerging Nations
+            </motion.div>
+            <motion.h1 variants={fadeUp} className="font-serif text-[40px] sm:text-[54px] md:text-[72px] lg:text-[92px] leading-[1.0] tracking-tight text-icen-ink">
               Where <em className="italic text-icen-blue">emerging nations</em><br />
-              shape the future<br />
-              <span className="text-icen-inkSoft">together.</span>
+              shape the future <span className="text-icen-inkSoft">together.</span>
             </motion.h1>
-            <motion.p variants={fadeUp} className="mt-6 md:mt-8 max-w-xl text-base md:text-lg text-icen-inkSoft leading-relaxed">
+            <motion.p variants={fadeUp} className="mt-7 md:mt-8 max-w-2xl text-base md:text-lg text-icen-inkSoft leading-relaxed">
               ICEN is a non-state, non-partisan council of leaders, builders and nations — architecting a rising world order through policy, capital and craft.
             </motion.p>
             <motion.div variants={fadeUp} className="mt-8 md:mt-10 flex flex-wrap gap-3 md:gap-4">
@@ -74,27 +77,26 @@ export default function Home() {
                 Explore the Network
               </Link>
             </motion.div>
-            <motion.div variants={fadeUp} className="mt-10 md:mt-14 flex items-center gap-4 text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-icen-muted">
+            <motion.div variants={fadeUp} className="mt-10 flex items-center gap-4 text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-icen-muted">
               <span className="h-px w-10 bg-icen-line" /> Geneva · New Delhi · Nairobi · São Paulo
             </motion.div>
           </motion.div>
+        </div>
 
-          {/* Globe panel — dark for premium contrast on ivory */}
-          <div className="relative order-first lg:order-none">
-            <div className="relative icen-panel-dark rounded-none overflow-hidden h-[380px] sm:h-[480px] lg:h-[620px]">
-              <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-4 md:px-6 pt-4 md:pt-5 text-white/70 text-[9px] md:text-[10px] uppercase tracking-[0.28em] font-sans">
-                <span>ICEN · Global Network</span>
-                <span>Live</span>
-              </div>
-              <HeroGlobe height={620} />
-              <div className="absolute bottom-0 left-0 right-0 px-4 md:px-6 pb-4 md:pb-5 text-white/50 text-[9px] md:text-[10px] uppercase tracking-[0.28em] font-sans flex justify-between">
-                <span>50 nations · 8 regions</span>
-                <span className="hidden sm:inline">Autorotation enabled</span>
-              </div>
-            </div>
+        {/* World map — full-width editorial atlas */}
+        <div className="relative mt-10 md:mt-16" data-testid="hero-map-wrap">
+          <div className="max-w-[1600px] mx-auto">
+            <WorldMap height={560} />
+          </div>
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-10 mt-4 flex items-center justify-between text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-icen-muted">
+            <span>The ICEN Atlas · 50 nations · 8 regions</span>
+            <span className="hidden sm:inline">Capitals highlighted</span>
           </div>
         </div>
       </section>
+
+      {/* FLAGS MARQUEE — member nations */}
+      <FlagsMarquee />
 
       {/* STATS */}
       <section className="py-24 md:py-32 bg-icen-paper relative border-t border-icen-line" data-testid="stats-section">
