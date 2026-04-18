@@ -1,15 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Check, ArrowRight } from "lucide-react";
+import SEO from "../components/SEO";
 import { TIERS } from "../content/icen";
 
 export default function Membership() {
   return (
     <div className="pt-[120px] pb-24 bg-icen-ivory relative" data-testid="membership-page">
+      <SEO title="Membership" description="Four tiers. One standard of rigor. Observer, Fellow, Council Member, and Founding Nation tracks — by application and nomination." path="/membership" />
       <div className="absolute inset-0 icen-grid-light opacity-60" />
       <div className="relative max-w-[1300px] mx-auto px-6 lg:px-10">
         <div className="icen-overline mb-6">Membership</div>
-        <h1 className="font-serif text-5xl md:text-7xl text-icen-ink leading-[1.02] tracking-tight max-w-4xl">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl text-icen-ink leading-[1.04] tracking-tight max-w-4xl">
           Not for everyone. <em className="italic text-icen-blue">By design.</em>
         </h1>
         <p className="mt-8 text-lg text-icen-inkSoft max-w-2xl leading-relaxed">

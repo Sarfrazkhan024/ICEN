@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { REGIONS } from "../content/icen";
+import SEO from "../components/SEO";
 
 export default function Chapters() {
   const [active, setActive] = useState(REGIONS[0].id);
@@ -8,9 +9,10 @@ export default function Chapters() {
 
   return (
     <div className="pt-[120px] pb-24 bg-icen-ivory" data-testid="chapters-page">
+      <SEO title="Chapters & Regions" description="Eight regional chapters. Fifty-plus countries. Explore the ICEN global network by region." path="/chapters" />
       <div className="max-w-[1300px] mx-auto px-6 lg:px-10">
         <div className="icen-overline mb-6">Chapters & Regions</div>
-        <h1 className="font-serif text-5xl md:text-7xl text-icen-ink leading-[1.02] tracking-tight max-w-4xl">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl text-icen-ink leading-[1.04] tracking-tight max-w-4xl">
           A network that <em className="italic text-icen-blue">reads the map differently.</em>
         </h1>
         <p className="mt-8 text-lg text-icen-inkSoft max-w-2xl leading-relaxed">

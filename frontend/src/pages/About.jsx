@@ -2,16 +2,18 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function About() {
   return (
     <div className="pt-[120px] pb-24 bg-icen-ivory relative" data-testid="about-page">
+      <SEO title="About" description="An institution for the world that is becoming. ICEN is a non-state, non-partisan, non-aligned council convening emerging nations, their leaders, and the builders shaping them." path="/about" />
       <div className="absolute inset-0 icen-grid-light opacity-60" />
       <div className="relative max-w-[1100px] mx-auto px-6 lg:px-10">
         <div className="icen-overline mb-6">About ICEN</div>
         <motion.h1
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
-          className="font-serif text-5xl md:text-7xl text-icen-ink leading-[1.02] tracking-tight max-w-4xl">
+          className="font-serif text-4xl sm:text-5xl md:text-7xl text-icen-ink leading-[1.04] tracking-tight max-w-4xl">
           An institution for the <em className="italic text-icen-blue">world that is becoming.</em>
         </motion.h1>
         <p className="mt-8 text-lg text-icen-inkSoft max-w-2xl leading-relaxed">

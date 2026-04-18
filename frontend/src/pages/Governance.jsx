@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { GOVERNANCE } from "../content/icen";
+import SEO from "../components/SEO";
 
 function FlowNode({ x, y, w = 220, h = 80, label, meta, accent = false, testid }) {
   return (
@@ -33,9 +34,10 @@ function AnimatedLine({ d, delay = 0 }) {
 export default function Governance() {
   return (
     <div className="pt-[120px] pb-24 bg-icen-ivory" data-testid="governance-page">
+      <SEO title="Councils & Governance" description="The architecture of the ICEN council — General Assembly, Secretariat, twelve Pillar Councils, and eight Regional Chapters." path="/governance" />
       <div className="max-w-[1300px] mx-auto px-6 lg:px-10">
         <div className="icen-overline mb-6">Councils & Governance</div>
-        <h1 className="font-serif text-5xl md:text-7xl text-icen-ink leading-[1.02] tracking-tight max-w-4xl">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl text-icen-ink leading-[1.04] tracking-tight max-w-4xl">
           Architecture of the <em className="italic text-icen-blue">council.</em>
         </h1>
         <p className="mt-8 text-lg text-icen-inkSoft max-w-2xl leading-relaxed">

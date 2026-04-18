@@ -3,6 +3,7 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, AlertCircle } from "lucide-react";
 import { TIERS, PILLARS } from "../content/icen";
+import SEO from "../components/SEO";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -61,10 +62,11 @@ export default function Apply() {
 
   return (
     <div className="pt-[120px] pb-24 bg-icen-ivory min-h-screen relative" data-testid="apply-page">
+      <SEO title="Apply for Membership" description="Submit your candidacy for ICEN membership. Reviewed by the Secretariat within 7–10 business days." path="/apply" />
       <div className="absolute inset-0 icen-grid-light opacity-60" />
       <div className="relative max-w-[900px] mx-auto px-6 lg:px-10">
         <div className="icen-overline mb-6">Apply</div>
-        <h1 className="font-serif text-5xl md:text-6xl text-icen-ink leading-[1.02] tracking-tight max-w-3xl">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-icen-ink leading-[1.04] tracking-tight max-w-3xl">
           Submit your <em className="italic text-icen-blue">candidacy.</em>
         </h1>
         <p className="mt-6 text-lg text-icen-inkSoft max-w-xl">

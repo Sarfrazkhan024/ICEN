@@ -2,13 +2,15 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { PROGRAMS } from "../content/icen";
+import SEO from "../components/SEO";
 
 export default function Programs() {
   return (
     <div className="pt-[120px] pb-24 bg-icen-ivory" data-testid="programs-page">
+      <SEO title="Programs" description="Instruments of consequence — Summit, Accelerator, Policy Lab, Fellows, Capital Bridge, and Observatory." path="/programs" />
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         <div className="icen-overline mb-6">Programs</div>
-        <h1 className="font-serif text-5xl md:text-7xl text-icen-ink leading-[1.02] tracking-tight max-w-4xl">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl text-icen-ink leading-[1.04] tracking-tight max-w-4xl">
           Instruments of <em className="italic text-icen-blue">consequence.</em>
         </h1>
         <p className="mt-8 text-lg text-icen-inkSoft max-w-2xl leading-relaxed">

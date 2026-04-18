@@ -5,7 +5,8 @@ import { ArrowRight, Globe2, Sparkles } from "lucide-react";
 import * as Icons from "lucide-react";
 import HeroGlobe from "../components/HeroGlobe";
 import AnimatedCounter from "../components/AnimatedCounter";
-import { PILLARS, TIERS, REGIONS } from "../content/icen";
+import SEO from "../components/SEO";
+import { PILLARS, TIERS, REGIONS, IMPACT_IMAGES } from "../content/icen";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -48,23 +49,24 @@ function PillarCard({ p }) {
 export default function Home() {
   return (
     <div className="relative bg-icen-ivory">
+      <SEO title={null} path="/" />
       {/* HERO */}
-      <section className="relative min-h-[100vh] overflow-hidden pt-[80px]" data-testid="hero-section">
+      <section className="relative min-h-[100vh] overflow-hidden pt-[72px] md:pt-[80px]" data-testid="hero-section">
         <div className="absolute inset-0 icen-grid-light opacity-70" />
-        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10 pt-14 grid lg:grid-cols-[1.05fr_1fr] gap-10 items-center">
+        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10 pt-10 md:pt-14 grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-10 items-center">
           <motion.div initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.12 } } }}>
             <motion.div variants={fadeUp} className="icen-overline mb-6 flex items-center gap-3">
               <Globe2 size={14} /> A Global Council · Est. MMXXVI
             </motion.div>
-            <motion.h1 variants={fadeUp} className="font-serif text-[48px] md:text-[68px] lg:text-[84px] leading-[0.98] tracking-tight text-icen-ink">
+            <motion.h1 variants={fadeUp} className="font-serif text-[40px] sm:text-[52px] md:text-[68px] lg:text-[84px] leading-[1.0] tracking-tight text-icen-ink">
               Where <em className="italic text-icen-blue">emerging nations</em><br />
               shape the future<br />
               <span className="text-icen-inkSoft">together.</span>
             </motion.h1>
-            <motion.p variants={fadeUp} className="mt-8 max-w-xl text-[17px] md:text-lg text-icen-inkSoft leading-relaxed">
+            <motion.p variants={fadeUp} className="mt-6 md:mt-8 max-w-xl text-base md:text-lg text-icen-inkSoft leading-relaxed">
               ICEN is a non-state, non-partisan council of leaders, builders and nations — architecting a rising world order through policy, capital and craft.
             </motion.p>
-            <motion.div variants={fadeUp} className="mt-10 flex flex-wrap gap-4">
+            <motion.div variants={fadeUp} className="mt-8 md:mt-10 flex flex-wrap gap-3 md:gap-4">
               <Link to="/apply" className="icen-btn-primary" data-testid="hero-apply-cta">
                 Apply for Membership <ArrowRight size={14} />
               </Link>
@@ -72,22 +74,22 @@ export default function Home() {
                 Explore the Network
               </Link>
             </motion.div>
-            <motion.div variants={fadeUp} className="mt-14 flex items-center gap-4 text-[11px] tracking-[0.3em] uppercase text-icen-muted">
+            <motion.div variants={fadeUp} className="mt-10 md:mt-14 flex items-center gap-4 text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-icen-muted">
               <span className="h-px w-10 bg-icen-line" /> Geneva · New Delhi · Nairobi · São Paulo
             </motion.div>
           </motion.div>
 
           {/* Globe panel — dark for premium contrast on ivory */}
-          <div className="relative">
-            <div className="relative icen-panel-dark rounded-none overflow-hidden" style={{ height: 620 }}>
-              <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 pt-5 text-white/70 text-[10px] uppercase tracking-[0.28em] font-sans">
+          <div className="relative order-first lg:order-none">
+            <div className="relative icen-panel-dark rounded-none overflow-hidden h-[380px] sm:h-[480px] lg:h-[620px]">
+              <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-4 md:px-6 pt-4 md:pt-5 text-white/70 text-[9px] md:text-[10px] uppercase tracking-[0.28em] font-sans">
                 <span>ICEN · Global Network</span>
                 <span>Live</span>
               </div>
               <HeroGlobe height={620} />
-              <div className="absolute bottom-0 left-0 right-0 px-6 pb-5 text-white/50 text-[10px] uppercase tracking-[0.28em] font-sans flex justify-between">
+              <div className="absolute bottom-0 left-0 right-0 px-4 md:px-6 pb-4 md:pb-5 text-white/50 text-[9px] md:text-[10px] uppercase tracking-[0.28em] font-sans flex justify-between">
                 <span>50 nations · 8 regions</span>
-                <span>Autorotation enabled</span>
+                <span className="hidden sm:inline">Autorotation enabled</span>
               </div>
             </div>
           </div>
@@ -163,6 +165,51 @@ export default function Home() {
               <p>ICEN is the room we build — together. A council where sovereignty is a starting point, not a permission slip. Where emerging nations stop negotiating for a seat and start designing the table.</p>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* IMPACT MOSAIC — high-quality photography */}
+      <section className="py-24 md:py-32 bg-icen-paper" data-testid="impact-section">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+            <div>
+              <div className="icen-overline mb-4">The Work</div>
+              <h2 className="font-serif text-4xl md:text-6xl text-icen-ink leading-[1.05] tracking-tight">
+                Measured in <em className="italic text-icen-blue">consequence,</em><br/>
+                <span className="text-icen-inkSoft">not visibility.</span>
+              </h2>
+            </div>
+            <p className="max-w-md text-icen-inkSoft text-[15px] leading-relaxed">
+              From summit halls to refinery floors. From curriculum boards to capital bridges. A year of ICEN work, in seven frames.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            {[
+              { src: IMPACT_IMAGES.summit, tag: "Summit", label: "ICEN Global Summit · Geneva", span: "col-span-2 row-span-2 aspect-square md:aspect-[1/1]" },
+              { src: IMPACT_IMAGES.tech, tag: "Technology", label: "Sovereign Cloud Charter", span: "aspect-[4/3]" },
+              { src: IMPACT_IMAGES.climate, tag: "Climate", label: "Critical Minerals Consortium", span: "aspect-[4/3]" },
+              { src: IMPACT_IMAGES.policy, tag: "Policy", label: "Ministerial Dialogues", span: "aspect-[4/3]" },
+              { src: IMPACT_IMAGES.youth, tag: "Youth", label: "Rising Fellows Cohort", span: "aspect-[4/3]" },
+              { src: IMPACT_IMAGES.infra, tag: "Infrastructure", label: "Regional Grid Compact", span: "col-span-2 aspect-[2/1]" },
+            ].map((i, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.7, delay: idx * 0.05 }}
+                className={`group relative overflow-hidden bg-icen-mist ${i.span}`}
+                data-testid={`impact-tile-${idx}`}
+              >
+                <img src={i.src} alt={i.label} loading="lazy" className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-icen-ink/80 via-icen-ink/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
+                  <div className="text-[10px] uppercase tracking-[0.24em] text-icen-blueSoft font-semibold">{i.tag}</div>
+                  <div className="font-serif text-base md:text-xl mt-1 leading-tight">{i.label}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
