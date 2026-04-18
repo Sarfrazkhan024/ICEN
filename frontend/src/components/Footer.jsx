@@ -28,7 +28,6 @@ export default function Footer() {
             <li><Link className="hover:text-icen-ink transition-colors" to="/membership">Membership</Link></li>
             <li><Link className="hover:text-icen-ink transition-colors" to="/apply">Apply</Link></li>
             <li><Link className="hover:text-icen-ink transition-colors" to="/pillars">The 12 Pillars</Link></li>
-            <li><Link className="hover:text-icen-ink transition-colors" to="/admin/login">Admin</Link></li>
           </ul>
         </div>
       </div>

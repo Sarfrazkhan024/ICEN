@@ -69,6 +69,22 @@ body {
 }
 .animate-marquee-l:hover, .animate-marquee-r:hover { animation-play-state: paused; }
 
+/* Mobile-first polish */
+@media (max-width: 640px) {
+  .icen-overline { font-size: 10px; letter-spacing: 0.26em; }
+  .icen-btn-primary, .icen-btn-ghost, .icen-btn-ghost-inv {
+    padding: 12px 20px; font-size: 12px;
+  }
+}
+
+/* Line clamp helper */
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Hairline divider */
 .icen-rule {
   height: 1px;

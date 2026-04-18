@@ -19,6 +19,7 @@ import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
 import Research from "./pages/Research";
 import ResearchDetail from "./pages/ResearchDetail";
+import NationProfile from "./pages/NationProfile";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 
@@ -60,6 +61,7 @@ function App() {
                 <Route path="/blog/:slug" element={<BlogDetail />} />
                 <Route path="/research" element={<Research />} />
                 <Route path="/research/:slug" element={<ResearchDetail />} />
+                <Route path="/nation/:slug" element={<NationProfile />} />
               </Route>
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />

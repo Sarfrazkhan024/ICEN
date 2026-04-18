@@ -1,12 +1,12 @@
 import React from "react";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
-import { geoPath, geoMercator } from "d3-geo";
+import { geoMercator } from "d3-geo";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { MEMBER_NATIONS } from "../content/nations";
 
-// Public world TopoJSON
 const WORLD_TOPO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
-// Emerging-nation capitals
 const CAPITALS = [
   { name: "New Delhi", coords: [77.2090, 28.6139] },
   { name: "Abuja",     coords: [7.4913, 9.0820] },
@@ -28,72 +28,75 @@ const CAPITALS = [
   { name: "Cape Town", coords: [18.4241, -33.9249] },
 ];
 
-// Arcs between key capitals — showing connection
 const ARCS = [
-  [CAPITALS[1], CAPITALS[0]],   // Abuja → Delhi
-  [CAPITALS[2], CAPITALS[5]],   // Brasília → Jakarta
-  [CAPITALS[4], CAPITALS[3]],   // Cairo → Nairobi
-  [CAPITALS[6], CAPITALS[9]],   // Riyadh → Hanoi
-  [CAPITALS[8], CAPITALS[17]],  // Astana → Cape Town
-  [CAPITALS[10], CAPITALS[11]], // Bogotá → Rabat
-  [CAPITALS[5], CAPITALS[16]],  // Jakarta → Dakar
-  [CAPITALS[13], CAPITALS[15]], // Mexico City → Addis Ababa
-  [CAPITALS[11], CAPITALS[9]],  // Rabat → Hanoi
-  [CAPITALS[14], CAPITALS[0]],  // Lima → Delhi
+  [CAPITALS[1], CAPITALS[0]],
+  [CAPITALS[2], CAPITALS[5]],
+  [CAPITALS[4], CAPITALS[3]],
+  [CAPITALS[6], CAPITALS[9]],
+  [CAPITALS[8], CAPITALS[17]],
+  [CAPITALS[10], CAPITALS[11]],
+  [CAPITALS[5], CAPITALS[16]],
+  [CAPITALS[13], CAPITALS[15]],
+  [CAPITALS[11], CAPITALS[9]],
+  [CAPITALS[14], CAPITALS[0]],
 ];
 
-// Build a great-circle-ish curved path in Mercator space between two [lng,lat] pairs
 function curvePath(proj, a, b, lift = 0.18) {
   const [ax, ay] = proj(a);
   const [bx, by] = proj(b);
   if (isNaN(ax) || isNaN(bx)) return "";
-  const mx = (ax + bx) / 2;
-  const my = (ay + by) / 2;
-  // control-point lifted perpendicular to line
-  const dx = bx - ax;
-  const dy = by - ay;
+  const mx = (ax + bx) / 2, my = (ay + by) / 2;
+  const dx = bx - ax, dy = by - ay;
   const len = Math.sqrt(dx * dx + dy * dy);
-  // perpendicular unit vector
-  const nx = -dy / (len || 1);
-  const ny = dx / (len || 1);
-  const cx = mx + nx * len * lift;
-  const cy = my + ny * len * lift;
+  const nx = -dy / (len || 1), ny = dx / (len || 1);
+  const cx = mx + nx * len * lift, cy = my + ny * len * lift;
   return `M ${ax} ${ay} Q ${cx} ${cy} ${bx} ${by}`;
 }
 
 export default function WorldMap({ height = 560 }) {
-  // Wide aspect — emphasize the Global South band
+  const navigate = useNavigate();
   const width = 1200;
-  const projection = geoMercator()
-    .scale(175)
-    .center([20, 10])
-    .translate([width / 2, height / 2.1]);
+  const projection = geoMercator().scale(175).center([20, 10]).translate([width / 2, height / 2.1]);
 
   return (
     <div className="relative w-full overflow-hidden" style={{ height }} data-testid="world-map">
-      <ComposableMap
-        projection={projection}
-        width={width}
-        height={height}
-        style={{ width: "100%", height: "100%" }}
-      >
+      <ComposableMap projection={projection} width={width} height={height} style={{ width: "100%", height: "100%" }}>
         <Geographies geography={WORLD_TOPO_URL}>
           {({ geographies }) =>
-            geographies.map((geo) => (
-              <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                style={{
-                  default: { fill: "#E6E1D5", stroke: "#D7CFBD", strokeWidth: 0.4, outline: "none" },
-                  hover:   { fill: "#D7CFBD", stroke: "#0A1628", strokeWidth: 0.5, outline: "none" },
-                  pressed: { fill: "#D7CFBD", outline: "none" },
-                }}
-              />
-            ))
+            geographies.map((geo) => {
+              const member = MEMBER_NATIONS[geo.properties.name];
+              const isMember = Boolean(member);
+              return (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  onClick={() => { if (member) navigate(`/nation/${member.slug}`); }}
+                  data-testid={isMember ? `map-country-${member.slug}` : undefined}
+                  style={{
+                    default: {
+                      fill: isMember ? "#CFD9FE" : "#E6E1D5",
+                      stroke: isMember ? "#0057FF" : "#D7CFBD",
+                      strokeWidth: isMember ? 0.6 : 0.4,
+                      outline: "none",
+                      cursor: isMember ? "pointer" : "default",
+                    },
+                    hover: {
+                      fill: isMember ? "#0057FF" : "#D7CFBD",
+                      stroke: isMember ? "#0A1628" : "#0A1628",
+                      strokeWidth: 0.6,
+                      outline: "none",
+                      cursor: isMember ? "pointer" : "default",
+                    },
+                    pressed: { fill: "#0A1628", outline: "none" },
+                  }}
+                >
+                  <title>{geo.properties.name}{isMember ? " — ICEN member" : ""}</title>
+                </Geography>
+              );
+            })
           }
         </Geographies>
 
-        {/* Animated arcs */}
         {ARCS.map((pair, i) => {
           const d = curvePath(projection, pair[0].coords, pair[1].coords);
           if (!d) return null;
@@ -112,13 +115,10 @@ export default function WorldMap({ height = 560 }) {
           );
         })}
 
-        {/* Capital markers with pulse */}
         {CAPITALS.map((c, i) => (
           <Marker key={c.name} coordinates={c.coords}>
-            <g>
-              <motion.circle
-                r={8}
-                fill="#0057FF"
+            <g style={{ pointerEvents: "none" }}>
+              <motion.circle r={8} fill="#0057FF"
                 initial={{ opacity: 0.45, scale: 1 }}
                 animate={{ opacity: 0, scale: 2.6 }}
                 transition={{ duration: 2.4, delay: i * 0.12, repeat: Infinity }}
@@ -129,7 +129,6 @@ export default function WorldMap({ height = 560 }) {
         ))}
       </ComposableMap>
 
-      {/* Soft edge vignette to blend into light theme */}
       <div className="pointer-events-none absolute inset-0" style={{
         background: "radial-gradient(ellipse at center, transparent 62%, rgba(247,245,239,0.88) 100%)"
       }} />

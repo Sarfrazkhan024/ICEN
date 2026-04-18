@@ -90,7 +90,6 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <Link to="/admin/login" data-testid="nav-admin" className="text-[11px] uppercase tracking-[0.22em] text-icen-muted hover:text-icen-ink transition-colors">Admin</Link>
           <Link to="/apply" data-testid="nav-apply-cta" className="icen-btn-primary text-[11px] py-3 px-5">
             Apply
           </Link>
@@ -127,7 +126,6 @@ export default function Navbar() {
               </NavLink>
             ))}
             <Link to="/apply" className="icen-btn-primary mt-5 justify-center">Apply for Membership</Link>
-            <Link to="/admin/login" className="text-center mt-3 text-[11px] uppercase tracking-[0.22em] text-icen-muted">Admin Login</Link>
           </div>
         </div>
       )}

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Navigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { ICENWordmark } from "../components/ICENEmblem";
-import { LogOut, Users, Clock, CheckCircle, XCircle, Search, ExternalLink, FileText, BookOpen, Plus, Pencil, Trash2, X } from "lucide-react";
+import { LogOut, Users, Clock, CheckCircle, XCircle, Search, ExternalLink, FileText, BookOpen, Plus, Pencil, Trash2, X, Upload } from "lucide-react";
 
 const STATUS_COLORS = {
   pending: "border-amber-500 text-amber-700 bg-amber-50",
@@ -282,6 +282,7 @@ function ContentPanel({ kind, authHeader, API }) {
 
 function ContentEditor({ kind, initial, onCancel, onSave }) {
   const isResearch = kind === "research";
+  const { authHeader, API } = useAuth();
   const [form, setForm] = useState(() => ({
     title: initial.title || "",
     excerpt: initial.excerpt || "",
@@ -296,9 +297,31 @@ function ContentEditor({ kind, initial, onCancel, onSave }) {
     published: initial.published !== false,
   }));
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [err, setErr] = useState("");
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+
+  const handleFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { setErr("File too large (max 5MB)"); return; }
+    setErr(""); setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const { data } = await axios.post(`${API}/admin/upload`, fd, {
+        headers: { ...authHeader() },
+      });
+      setForm((f) => ({ ...f, cover_image: data.url }));
+    } catch (e2) {
+      const d = e2?.response?.data?.detail;
+      setErr(typeof d === "string" ? d : "Upload failed.");
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -387,8 +410,19 @@ function ContentEditor({ kind, initial, onCancel, onSave }) {
         )}
 
         <div>
-          <Lbl>Cover image URL</Lbl>
-          <input data-testid="editor-cover" className={input} value={form.cover_image} onChange={set("cover_image")} placeholder="https://images.unsplash.com/..." />
+          <Lbl>Cover image</Lbl>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <input data-testid="editor-cover" className={`${input} flex-1`} value={form.cover_image} onChange={set("cover_image")} placeholder="Paste URL or upload a file" />
+            <label className={`icen-btn-ghost py-2.5 px-4 text-[11px] cursor-pointer whitespace-nowrap ${uploading ? "opacity-60 pointer-events-none" : ""}`}>
+              <Upload size={13} /> {uploading ? "Uploading…" : "Upload"}
+              <input type="file" accept="image/*" onChange={handleFile} className="hidden" data-testid="editor-cover-file" />
+            </label>
+          </div>
+          {form.cover_image && (
+            <div className="mt-3 aspect-[16/8] max-w-[420px] overflow-hidden border border-icen-line bg-icen-mist">
+              <img src={form.cover_image} alt="cover" className="w-full h-full object-cover" />
+            </div>
+          )}
         </div>
 
         <div>

@@ -12,13 +12,15 @@ import re
 import logging
 import asyncio
 import uuid
+import base64
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Literal
 
 import bcrypt
 import jwt
 import resend
-from fastapi import FastAPI, APIRouter, HTTPException, Depends
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, UploadFile, File
+from fastapi.responses import Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -346,6 +348,46 @@ async def admin_stats(current: dict = Depends(get_current_admin)):
         "blog_posts": blog_total,
         "research_papers": research_total,
     }
+
+
+# ---- Media (image upload) ----
+MAX_UPLOAD_BYTES = 5 * 1024 * 1024  # 5MB
+ALLOWED_IMAGE_MIME = {"image/png", "image/jpeg", "image/jpg", "image/webp", "image/gif", "image/svg+xml"}
+
+
+@api_router.post("/admin/upload")
+async def upload_media(file: UploadFile = File(...), current: dict = Depends(get_current_admin)):
+    if file.content_type not in ALLOWED_IMAGE_MIME:
+        raise HTTPException(status_code=400, detail=f"Unsupported type: {file.content_type}")
+    data = await file.read()
+    if len(data) > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=400, detail="File too large (max 5MB)")
+    if len(data) == 0:
+        raise HTTPException(status_code=400, detail="Empty file")
+    media_id = str(uuid.uuid4())
+    await db.media.insert_one({
+        "id": media_id,
+        "content_type": file.content_type,
+        "data": base64.b64encode(data).decode("ascii"),
+        "size": len(data),
+        "filename": file.filename,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "uploaded_by": current.get("email"),
+    })
+    url = f"{FRONTEND_URL.rstrip('/')}/api/media/{media_id}"
+    return {"id": media_id, "url": url, "size": len(data), "content_type": file.content_type}
+
+
+@api_router.get("/media/{media_id}")
+async def get_media(media_id: str):
+    doc = await db.media.find_one({"id": media_id}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Not found")
+    return Response(
+        content=base64.b64decode(doc["data"]),
+        media_type=doc["content_type"],
+        headers={"Cache-Control": "public, max-age=31536000, immutable"},
+    )
 
 
 # ---- Blog ----
