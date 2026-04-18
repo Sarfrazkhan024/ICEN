@@ -30,18 +30,18 @@ function PillarCard({ p }) {
     <motion.div variants={fadeUp} className="relative">
       <Link
         to={`/pillars/${p.slug}`}
-        className="group relative block p-7 md:p-8 icen-card overflow-hidden h-full"
+        className="group relative block p-5 md:p-7 lg:p-8 icen-card overflow-hidden h-full"
         data-testid={`pillar-card-${p.id}`}
       >
         <div className="flex items-start justify-between">
-          <div className="text-xs font-mono text-icen-muted tracking-widest">P.{String(p.id).padStart(2, '0')}</div>
+          <div className="text-[11px] md:text-xs font-mono text-icen-muted tracking-widest">P.{String(p.id).padStart(2, '0')}</div>
           <Icon className="text-icen-blue group-hover:text-icen-green transition-colors" size={22} strokeWidth={1.4} />
         </div>
-        <h3 className="font-serif text-xl md:text-2xl text-icen-ink mt-7 leading-tight group-hover:text-icen-blue transition-colors">{p.title}</h3>
-        <p className="mt-3 text-[13.5px] text-icen-inkSoft leading-relaxed max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 group-hover:mt-4 transition-all duration-500 overflow-hidden">
+        <h3 className="font-serif text-[17px] sm:text-xl md:text-2xl text-icen-ink mt-5 md:mt-7 leading-[1.15] tracking-tight group-hover:text-icen-blue transition-colors" style={{ overflowWrap: "anywhere", wordBreak: "break-word" }}>{p.title}</h3>
+        <p className="mt-3 text-[13px] md:text-[13.5px] text-icen-inkSoft leading-relaxed max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 group-hover:mt-4 transition-all duration-500 overflow-hidden">
           {p.desc}
         </p>
-        <div className="mt-6 flex items-center text-[11px] uppercase tracking-[0.24em] text-icen-muted group-hover:text-icen-blue transition-colors">
+        <div className="mt-5 md:mt-6 flex items-center text-[10px] md:text-[11px] uppercase tracking-[0.22em] md:tracking-[0.24em] text-icen-muted group-hover:text-icen-blue transition-colors">
           Explore <ArrowRight size={12} className="ml-2" />
         </div>
       </Link>

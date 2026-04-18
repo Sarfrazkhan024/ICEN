@@ -75,6 +75,12 @@ body {
   .icen-btn-primary, .icen-btn-ghost, .icen-btn-ghost-inv {
     padding: 12px 20px; font-size: 12px;
   }
+  /* Prevent long pillar titles from overflowing narrow cards */
+  .icen-card h3 {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+  }
 }
 
 /* Line clamp helper */
