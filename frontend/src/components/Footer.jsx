@@ -11,7 +11,7 @@ export default function Footer() {
           <p className="mt-6 text-[15px] text-icen-inkSoft max-w-md leading-relaxed">
             A global council where emerging nations shape the future together. Independent, non-partisan, and built for the rising world.
           </p>
-          <div className="mt-8 icen-overline">Est. MMXXVI · Geneva · New Delhi · Nairobi</div>
+          <div className="mt-8 icen-overline">Geneva · New Delhi · Nairobi · São Paulo</div>
         </div>
         <div>
           <div className="icen-overline icen-overline-muted mb-5">Institution</div>

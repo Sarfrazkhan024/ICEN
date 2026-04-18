@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Globe2, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import * as Icons from "lucide-react";
 import WorldMap from "../components/WorldMap";
 import FlagsMarquee from "../components/FlagsMarquee";
@@ -27,22 +27,24 @@ const Stat = ({ end, suffix = "", label, kicker }) => (
 function PillarCard({ p }) {
   const Icon = Icons[p.icon] || Icons.Sparkles;
   return (
-    <motion.div
-      variants={fadeUp}
-      className="group relative p-7 md:p-8 icen-card overflow-hidden"
-      data-testid={`pillar-card-${p.id}`}
-    >
-      <div className="flex items-start justify-between">
-        <div className="text-xs font-mono text-icen-muted tracking-widest">P.{String(p.id).padStart(2, '0')}</div>
-        <Icon className="text-icen-blue group-hover:text-icen-green transition-colors" size={22} strokeWidth={1.4} />
-      </div>
-      <h3 className="font-serif text-xl md:text-2xl text-icen-ink mt-7 leading-tight">{p.title}</h3>
-      <p className="mt-3 text-[13.5px] text-icen-inkSoft leading-relaxed max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 group-hover:mt-4 transition-all duration-500 overflow-hidden">
-        {p.desc}
-      </p>
-      <div className="mt-6 flex items-center text-[11px] uppercase tracking-[0.24em] text-icen-muted group-hover:text-icen-blue transition-colors">
-        Explore <ArrowRight size={12} className="ml-2" />
-      </div>
+    <motion.div variants={fadeUp} className="relative">
+      <Link
+        to={`/pillars/${p.slug}`}
+        className="group relative block p-7 md:p-8 icen-card overflow-hidden h-full"
+        data-testid={`pillar-card-${p.id}`}
+      >
+        <div className="flex items-start justify-between">
+          <div className="text-xs font-mono text-icen-muted tracking-widest">P.{String(p.id).padStart(2, '0')}</div>
+          <Icon className="text-icen-blue group-hover:text-icen-green transition-colors" size={22} strokeWidth={1.4} />
+        </div>
+        <h3 className="font-serif text-xl md:text-2xl text-icen-ink mt-7 leading-tight group-hover:text-icen-blue transition-colors">{p.title}</h3>
+        <p className="mt-3 text-[13.5px] text-icen-inkSoft leading-relaxed max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 group-hover:mt-4 transition-all duration-500 overflow-hidden">
+          {p.desc}
+        </p>
+        <div className="mt-6 flex items-center text-[11px] uppercase tracking-[0.24em] text-icen-muted group-hover:text-icen-blue transition-colors">
+          Explore <ArrowRight size={12} className="ml-2" />
+        </div>
+      </Link>
     </motion.div>
   );
 }
@@ -56,11 +58,11 @@ export default function Home() {
         <div className="absolute inset-0 icen-grid-light opacity-60" />
         <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10 pt-10 md:pt-14">
           <motion.div initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="max-w-[1100px]">
-            <motion.div variants={fadeUp} className="icen-overline mb-6 flex items-center gap-3">
-              <Globe2 size={14} /> A Global Council · Est. MMXXVI
-            </motion.div>
-            <motion.div variants={fadeUp} className="text-[11px] sm:text-[13px] tracking-[0.34em] uppercase text-icen-inkSoft font-sans font-semibold mb-5" data-testid="hero-fullname">
-              International Council for Emerging Nations
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8" data-testid="hero-fullname">
+              <span className="h-px w-12 bg-icen-ink" />
+              <span className="font-serif text-[18px] md:text-[22px] text-icen-ink leading-none">
+                International Council <em className="italic text-icen-blue">for Emerging Nations</em>
+              </span>
             </motion.div>
             <motion.h1 variants={fadeUp} className="font-serif text-[40px] sm:text-[54px] md:text-[72px] lg:text-[92px] leading-[1.0] tracking-tight text-icen-ink">
               Where <em className="italic text-icen-blue">emerging nations</em><br />
@@ -187,12 +189,12 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {[
-              { src: IMPACT_IMAGES.summit, tag: "Summit", label: "ICEN Global Summit · Geneva", span: "col-span-2 row-span-2 aspect-square md:aspect-[1/1]" },
-              { src: IMPACT_IMAGES.tech, tag: "Technology", label: "Sovereign Cloud Charter", span: "aspect-[4/3]" },
-              { src: IMPACT_IMAGES.climate, tag: "Climate", label: "Critical Minerals Consortium", span: "aspect-[4/3]" },
-              { src: IMPACT_IMAGES.policy, tag: "Policy", label: "Ministerial Dialogues", span: "aspect-[4/3]" },
-              { src: IMPACT_IMAGES.youth, tag: "Youth", label: "Rising Fellows Cohort", span: "aspect-[4/3]" },
-              { src: IMPACT_IMAGES.infra, tag: "Infrastructure", label: "Regional Grid Compact", span: "col-span-2 aspect-[2/1]" },
+              { src: IMPACT_IMAGES.summit, tag: "Summit", label: "ICEN Global Summit · Geneva", span: "col-span-2 row-span-2 aspect-square md:aspect-[1/1]", to: "/programs" },
+              { src: IMPACT_IMAGES.tech, tag: "Technology", label: "Sovereign Cloud Charter", span: "aspect-[4/3]", to: "/pillars/technology-sovereignty" },
+              { src: IMPACT_IMAGES.climate, tag: "Climate", label: "Critical Minerals Consortium", span: "aspect-[4/3]", to: "/pillars/climate-energy" },
+              { src: IMPACT_IMAGES.policy, tag: "Policy", label: "Ministerial Dialogues", span: "aspect-[4/3]", to: "/pillars/governance-rule-of-law" },
+              { src: IMPACT_IMAGES.youth, tag: "Youth", label: "Rising Fellows Cohort", span: "aspect-[4/3]", to: "/pillars/youth-future" },
+              { src: IMPACT_IMAGES.infra, tag: "Infrastructure", label: "Regional Grid Compact", span: "col-span-2 aspect-[2/1]", to: "/pillars/infrastructure" },
             ].map((i, idx) => (
               <motion.div
                 key={idx}
@@ -200,15 +202,17 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.7, delay: idx * 0.05 }}
-                className={`group relative overflow-hidden bg-icen-mist ${i.span}`}
+                className={`relative overflow-hidden bg-icen-mist ${i.span}`}
                 data-testid={`impact-tile-${idx}`}
               >
-                <img src={i.src} alt={i.label} loading="lazy" className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-icen-ink/80 via-icen-ink/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
-                  <div className="text-[10px] uppercase tracking-[0.24em] text-icen-blueSoft font-semibold">{i.tag}</div>
-                  <div className="font-serif text-base md:text-xl mt-1 leading-tight">{i.label}</div>
-                </div>
+                <Link to={i.to} className="group block w-full h-full relative">
+                  <img src={i.src} alt={i.label} loading="lazy" className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-icen-ink/80 via-icen-ink/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
+                    <div className="text-[10px] uppercase tracking-[0.24em] text-icen-blueSoft font-semibold">{i.tag}</div>
+                    <div className="font-serif text-base md:text-xl mt-1 leading-tight">{i.label}</div>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -229,9 +233,9 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {REGIONS.map((r) => (
-              <div key={r.id} className="group p-7 icen-card" data-testid={`region-card-${r.id}`}>
+              <Link key={r.id} to="/chapters" className="group p-7 icen-card block" data-testid={`region-card-${r.id}`}>
                 <div className="font-mono text-xs text-icen-muted tracking-widest">R.{r.id.toUpperCase()}</div>
-                <h3 className="font-serif text-2xl text-icen-ink mt-4 leading-tight">{r.name}</h3>
+                <h3 className="font-serif text-2xl text-icen-ink mt-4 leading-tight group-hover:text-icen-blue transition-colors">{r.name}</h3>
                 <div className="mt-4 flex items-baseline gap-2">
                   <div className="font-serif text-4xl text-icen-blue font-semibold">{r.chapters}</div>
                   <div className="text-[10px] uppercase tracking-[0.24em] text-icen-muted">Chapters</div>
@@ -242,7 +246,7 @@ export default function Home() {
                   ))}
                   {r.countries.length > 6 && <span className="text-[11px] px-2 py-1 text-icen-muted">+{r.countries.length - 6}</span>}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -264,10 +268,11 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {TIERS.map((t) => (
-              <div
+              <Link
                 key={t.id}
+                to="/membership"
                 data-testid={`tier-card-${t.id}`}
-                className={`relative p-8 transition-all duration-500 ${
+                className={`group relative block p-8 transition-all duration-500 ${
                   t.highlight
                     ? "icen-panel-dark border border-icen-ink shadow-card"
                     : "icen-card"
@@ -288,7 +293,10 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-              </div>
+                <div className={`mt-6 flex items-center text-[11px] uppercase tracking-[0.24em] transition-colors ${t.highlight ? "text-white/80 group-hover:text-white" : "text-icen-muted group-hover:text-icen-ink"}`}>
+                  View details <ArrowRight size={12} className="ml-2" />
+                </div>
+              </Link>
             ))}
           </div>
         </div>

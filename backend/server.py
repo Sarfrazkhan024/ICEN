@@ -117,6 +117,7 @@ class LoginResponse(BaseModel):
 class ApplicationCreate(BaseModel):
     full_name: str = Field(..., min_length=2, max_length=120)
     email: EmailStr
+    phone: Optional[str] = Field(None, max_length=40)
     country: str = Field(..., min_length=2, max_length=80)
     organization: Optional[str] = Field(None, max_length=160)
     role_title: Optional[str] = Field(None, max_length=120)
@@ -131,6 +132,7 @@ class Application(BaseModel):
     id: str
     full_name: str
     email: str
+    phone: Optional[str] = None
     country: str
     organization: Optional[str] = None
     role_title: Optional[str] = None
@@ -225,6 +227,7 @@ def build_admin_email(app_doc: dict) -> str:
       <table cellpadding="6" style="font-size:14px;color:#334155;border-collapse:collapse">
         <tr><td style="color:#6B7280">Name</td><td>{app_doc['full_name']}</td></tr>
         <tr><td style="color:#6B7280">Email</td><td>{app_doc['email']}</td></tr>
+        <tr><td style="color:#6B7280">Phone</td><td>{app_doc.get('phone') or '—'}</td></tr>
         <tr><td style="color:#6B7280">Country</td><td>{app_doc['country']}</td></tr>
         <tr><td style="color:#6B7280">Organization</td><td>{app_doc.get('organization') or '—'}</td></tr>
         <tr><td style="color:#6B7280">Role</td><td>{app_doc.get('role_title') or '—'}</td></tr>
@@ -278,8 +281,8 @@ async def create_application(payload: ApplicationCreate):
     asyncio.create_task(_notify())
 
     return Application(
-        id=doc["id"], full_name=doc["full_name"], email=doc["email"], country=doc["country"],
-        organization=doc.get("organization"), role_title=doc.get("role_title"),
+        id=doc["id"], full_name=doc["full_name"], email=doc["email"], phone=doc.get("phone"),
+        country=doc["country"], organization=doc.get("organization"), role_title=doc.get("role_title"),
         membership_tier=doc["membership_tier"], focus_pillars=doc["focus_pillars"],
         motivation=doc["motivation"], linkedin=doc.get("linkedin"),
         status=doc["status"], created_at=now, updated_at=now,

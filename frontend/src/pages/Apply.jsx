@@ -23,6 +23,7 @@ export default function Apply() {
   const [form, setForm] = useState({
     full_name: "",
     email: "",
+    phone: "",
     country: "",
     organization: "",
     role_title: "",
@@ -112,10 +113,14 @@ export default function Apply() {
                         <input data-testid="apply-email" type="email" className={inputCls} value={form.email} onChange={update("email")} placeholder="jane@ministry.gov" />
                       </div>
                       <div>
+                        <Label>Phone (with country code)</Label>
+                        <input data-testid="apply-phone" type="tel" className={inputCls} value={form.phone} onChange={update("phone")} placeholder="+234 802 000 0000" />
+                      </div>
+                      <div>
                         <Label>Country</Label>
                         <input data-testid="apply-country" className={inputCls} value={form.country} onChange={update("country")} placeholder="Nigeria" />
                       </div>
-                      <div>
+                      <div className="md:col-span-2">
                         <Label>LinkedIn (optional)</Label>
                         <input data-testid="apply-linkedin" className={inputCls} value={form.linkedin} onChange={update("linkedin")} placeholder="https://linkedin.com/in/..." />
                       </div>
@@ -191,6 +196,7 @@ export default function Apply() {
                       <dl className="grid grid-cols-3 gap-y-3 gap-x-6 text-icen-inkSoft">
                         <dt className="col-span-1 text-icen-muted">Name</dt><dd className="col-span-2 text-icen-ink">{form.full_name}</dd>
                         <dt className="col-span-1 text-icen-muted">Email</dt><dd className="col-span-2 text-icen-ink">{form.email}</dd>
+                        <dt className="col-span-1 text-icen-muted">Phone</dt><dd className="col-span-2 text-icen-ink">{form.phone || "—"}</dd>
                         <dt className="col-span-1 text-icen-muted">Country</dt><dd className="col-span-2 text-icen-ink">{form.country}</dd>
                         <dt className="col-span-1 text-icen-muted">Organization</dt><dd className="col-span-2 text-icen-ink">{form.organization || "—"}</dd>
                         <dt className="col-span-1 text-icen-muted">Role</dt><dd className="col-span-2 text-icen-ink">{form.role_title || "—"}</dd>

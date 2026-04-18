@@ -174,6 +174,7 @@ function ApplicationsPanel({ authHeader, API }) {
           <div className="icen-overline">Application</div>
           <div className="font-serif text-2xl text-icen-ink mt-1 mb-4">{selected.full_name}</div>
           <Detail label="Email" value={selected.email} />
+          <Detail label="Phone" value={selected.phone || "—"} />
           <Detail label="Country" value={selected.country} />
           <Detail label="Organization" value={selected.organization || "—"} />
           <Detail label="Role" value={selected.role_title || "—"} />
